@@ -1,4 +1,7 @@
 <?php
+//Este archivo verifica si hay una sesión activa
+// Y redirige al panel adecuado ya sea encuestado
+// o administrador.
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/stylesLogin.css">
 </head>
 <body>
 
@@ -28,10 +28,10 @@
             </form>
         </div>
         <div class="col-md-6 info-section">
-            <h2>Información de la Encuesta</h2>
-            <p>Bienvenido al sistema de encuestas sobre la implementación de energía renovable en México. Por favor, inicie sesión con su usuario y contraseña para continuar.</p>
-            <p>Si es un administrador, será redirigido al panel administrativo donde podrá gestionar usuarios y visualizar los resultados de las encuestas.</p>
-            <p>Si es un usuario encuestado, será redirigido a la encuesta correspondiente a su sector.</p>
+            <h2>Encuesta para la implementación de energía renovable en México</h2>
+            <p>Bienvenido al sistema de encuestas. Por favor, inicie sesión con su usuario y contraseña previamente proporcionado para continuar.</p>
+            <p>Si es un administrador, será redirigido al panel administrativo donde podrá visualizar los resultados de las encuestas.</p>
+            <p>Si es un usuario encuestado, será redirigido a la encuesta correspondiente.</p>
         </div>
     </div>
 </div>
