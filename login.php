@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Encuestas</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="styles/stylesLogin.css">
 </head>
 <body>
-
+<div class="background"></div>
 <div class="container">
     <div class="row">
         <div class="col-md-6 login-form">
@@ -35,6 +37,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        <?php
+        session_start();
+        if (isset($_SESSION['error'])) {
+            echo "toastr.error('{$_SESSION['error']}');";
+            unset($_SESSION['error']);
+        }
+        ?>
+    });
+</script>
 
 </body>
 </html>
