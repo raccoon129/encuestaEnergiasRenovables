@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $username;
             $_SESSION['id_usuario'] = $row['id_usuario'];
             $_SESSION['sector'] = $row['nombre_sector'];
+            $_SESSION['check_respuesta'] = $row['check_respuesta']; // Añade esto para check_respuesta
 
             if ($row['nombre_sector'] === 'admon') {
                 header("Location: views/panel_administrativo.php");

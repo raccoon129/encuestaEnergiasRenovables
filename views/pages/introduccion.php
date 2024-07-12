@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +17,11 @@
     <link rel="stylesheet" href="../../styles/stylesEncuesta.css">
 </head>
 <body>
-
-
 <div class="container mt-5">
     <div class="alert alert-info" role="alert">
         La realización de esta encuesta tomará aproximadamente 10 minutos. Por favor, asegúrese de tener suficiente tiempo para completarla sin interrupciones.
     </div>
     <a href="categoria1.php" class="btn btn-primary">Comenzar Encuesta</a>
 </div>
-
-
 </body>
 </html>

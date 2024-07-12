@@ -14,7 +14,7 @@
 <?php include 'includes/header.php'; ?>
 
 <div class="container mt-5">
-    <iframe id="encuestaFrame" src="pages/introduccion.php" style="width: 100%; height: 80vh; border: none;"></iframe>
+    <iframe id="encuestaFrame" src="pages/introduccion.php" style="width: 100%; height: 100vh; border: none;"></iframe>
 </div>
 
 

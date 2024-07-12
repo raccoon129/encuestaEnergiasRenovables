@@ -23,7 +23,7 @@ session_start();
             Encuesta Energías Renovables - Administrador
         </a>
         <form class="form-inline">
-            <a href="../logout.php" class="btn btn-danger my-2 my-sm-0">Cerrar Sesión</a>
+            <a href="includes/logout.php" class="btn btn-danger my-2 my-sm-0">Cerrar Sesión</a>
         </form>
     </nav>
 
