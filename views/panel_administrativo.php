@@ -28,13 +28,13 @@ session_start();
     </nav>
 
     <div class="sidebar">
-        <a href="#inicio" onclick="loadPage('pages/inicioPanelAdministrativo.php')"><i class="fas fa-home"></i> Inicio</a>
-        <a href="#gestionUsuarios" onclick="loadPage('pages/gestion_usuarios.php')"><i class="fas fa-users"></i> Gestión de Usuarios</a>
-        <a href="#verResultados" onclick="loadPage('pages/ver_resultados.php')"><i class="fas fa-chart-bar"></i> Ver Resultados</a>
+        <a href="#inicio" onclick="loadPage('pages/pagesAdmin/inicioPanelAdministrativo.php')"><i class="fas fa-home"></i> Inicio</a>
+        <a href="#gestionUsuarios" onclick="loadPage('pages/pagesAdmin/gestion_usuarios.php')"><i class="fas fa-users"></i> Gestión de Usuarios</a>
+        <a href="#verResultados" onclick="loadPage('pages/pagesAdmin/ver_resultados.php')"><i class="fas fa-chart-bar"></i> Ver Resultados</a>
     </div>
 
     <div class="main-content">
-        <iframe id="mainFrame" src="pages/inicioPanelAdministrativo.php"></iframe>
+        <iframe id="mainFrame" src="pages/pagesAdmin/inicioPanelAdministrativo.php"></iframe>
     </div>
 
     <script>

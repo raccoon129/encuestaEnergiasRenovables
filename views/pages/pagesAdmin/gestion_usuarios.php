@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../../db.php';
+include '../../../db.php';
 
 // Obtener los sectores
 $sql = "SELECT id_sector, nombre_sector FROM Sector";

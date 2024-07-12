@@ -33,7 +33,7 @@ if (!isset($_SESSION['username'])) {
                 <span class="nav-link">Usuario: <?php echo $_SESSION['username']; ?></span>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+                <a class="nav-link" href="includes/logout.php">Cerrar Sesión</a>
             </li>
         </ul>
     </div>
