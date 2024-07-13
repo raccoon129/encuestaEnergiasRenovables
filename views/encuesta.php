@@ -9,17 +9,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../styles/stylesEncuesta.css">
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 
 <?php include 'includes/header.php'; ?>
 
-<div class="container mt-5">
-    <iframe id="encuestaFrame" src="pages/introduccion.php" style="width: 100%; height: 100vh; border: none;"></iframe>
+<div class="container-fluid encuesta-container d-flex flex-column h-100">
+    <div class="row flex-grow-1">
+        <div class="col">
+            <div class="embed-responsive embed-responsive-16by9 h-100">
+                <iframe id="encuestaFrame" class="embed-responsive-item h-100" src="pages/introduccion.php"></iframe>
+            </div>
+        </div>
+    </div>
 </div>
 
-
+<?php //include 'includes/footer.php'; ?>
 
 </body>
-<?php include 'includes/footer.php'; ?>
-
 </html>

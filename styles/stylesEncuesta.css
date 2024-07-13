@@ -1,0 +1,16 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container.encuesta-container {
+    height: 100%;
+    padding: 0;
+}
+
+.encuesta-container iframe {
+    height: 100%;
+    width: 100%;
+    border: none;
+}

@@ -10,8 +10,13 @@ include '../../db.php';
 $sql = "SELECT id_factor, nombre_factor, contenido_factor FROM Factor WHERE id_factor BETWEEN 1 AND 18";
 $result = $conn->query($sql);
 $factores = [];
-while ($row = $result->fetch_assoc()) {
-    $factores[$row['id_factor']] = $row;
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $factores[$row['id_factor']] = $row;
+    }
+} else {
+    // Manejo de error si no hay factores
+    die("Error al obtener los factores.");
 }
 
 // Definir los pares de factores
@@ -25,8 +30,10 @@ $id_usuario = $_SESSION['id_usuario'];
 $sql_respuestas = "SELECT id_factor_1, id_factor_2, porcentaje_incidencia, factor_dominante FROM Respuesta WHERE id_encuesta IN (SELECT id_encuesta FROM Encuesta WHERE id_usuario = $id_usuario)";
 $result_respuestas = $conn->query($sql_respuestas);
 $respuestas = [];
-while ($row_respuestas = $result_respuestas->fetch_assoc()) {
-    $respuestas[$row_respuestas['id_factor_1'] . '-' . $row_respuestas['id_factor_2']] = $row_respuestas;
+if ($result_respuestas && $result_respuestas->num_rows > 0) {
+    while ($row_respuestas = $result_respuestas->fetch_assoc()) {
+        $respuestas[$row_respuestas['id_factor_1'] . '-' . $row_respuestas['id_factor_2']] = $row_respuestas;
+    }
 }
 
 // Contar la cantidad total de pares contestados
@@ -36,12 +43,13 @@ $pares_contestados = count($respuestas);
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Red Conexión A - Encuesta</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><!-- Versión completa de jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -60,70 +68,76 @@ $pares_contestados = count($respuestas);
         }
     </style>
 </head>
+
 <body>
     <div class="container mt-5">
-        <h2>Red Conexión A - Encuesta</h2>
+        <h2>Categoría 1 - Red Conexión A</h2>
+        <br>
         <div class="accordion" id="accordionFactors">
-            <?php
-            foreach ($pares as $index => $par) {
-                $factor1 = $factores[$par[0]];
-                $factor2 = $factores[$par[1]];
-                $collapseId = 'collapse' . $index;
-                $headingId = 'heading' . $index;
+            <?php if (!empty($pares)) : ?>
+                <?php foreach ($pares as $index => $par) : ?>
+                    <?php
+                    $factor1 = $factores[$par[0]];
+                    $factor2 = $factores[$par[1]];
+                    $collapseId = 'collapse' . $index;
+                    $headingId = 'heading' . $index;
 
-                $respuesta_guardada = isset($respuestas[$par[0] . '-' . $par[1]]);
-                $porcentaje_guardado_1 = $respuesta_guardada ? ($respuestas[$par[0] . '-' . $par[1]]['factor_dominante'] == $par[0] ? $respuestas[$par[0] . '-' . $par[1]]['porcentaje_incidencia'] : 0) : 0;
-                $porcentaje_guardado_2 = $respuesta_guardada ? ($respuestas[$par[0] . '-' . $par[1]]['factor_dominante'] == $par[1] ? $respuestas[$par[0] . '-' . $par[1]]['porcentaje_incidencia'] : 0) : 0;
-                $disabled_class = $respuesta_guardada ? 'disabled-range' : '';
-                $completed_class = $respuesta_guardada ? 'completed' : '';
-            ?>
-                <div class="card <?php echo $completed_class; ?>" id="card-<?php echo $index; ?>">
-                    <div class="card-header" id="<?php echo $headingId; ?>">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link <?php echo $index > 0 ? 'collapsed' : ''; ?>" type="button" data-toggle="collapse" data-target="#<?php echo $collapseId; ?>" aria-expanded="<?php echo $index === 0 ? 'true' : 'false'; ?>" aria-controls="<?php echo $collapseId; ?>">
-                                <?php echo $factor1['nombre_factor'] . ' vs ' . $factor2['nombre_factor']; ?>
-                            </button>
-                        </h5>
-                    </div>
+                    $respuesta_guardada = isset($respuestas[$par[0] . '-' . $par[1]]);
+                    $porcentaje_guardado_1 = $respuesta_guardada ? ($respuestas[$par[0] . '-' . $par[1]]['factor_dominante'] == $par[0] ? $respuestas[$par[0] . '-' . $par[1]]['porcentaje_incidencia'] : 0) : 0;
+                    $porcentaje_guardado_2 = $respuesta_guardada ? ($respuestas[$par[0] . '-' . $par[1]]['factor_dominante'] == $par[1] ? $respuestas[$par[0] . '-' . $par[1]]['porcentaje_incidencia'] : 0) : 0;
+                    $disabled_class = $respuesta_guardada ? 'disabled-range' : '';
+                    $completed_class = $respuesta_guardada ? 'completed' : '';
+                    ?>
+                    <div class="card <?php echo $completed_class; ?>" id="card-<?php echo $index; ?>">
+                        <div class="card-header" id="<?php echo $headingId; ?>">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link <?php echo $index > 0 ? 'collapsed' : ''; ?>" type="button" data-toggle="collapse" data-target="#<?php echo $collapseId; ?>" aria-expanded="<?php echo $index === 0 ? 'true' : 'false'; ?>" aria-controls="<?php echo $collapseId; ?>">
+                                    <?php echo $factor1['nombre_factor'] . ' vs ' . $factor2['nombre_factor']; ?>
+                                </button>
+                            </h5>
+                        </div>
 
-                    <div id="<?php echo $collapseId; ?>" class="collapse <?php echo $index === 0 ? 'show' : ''; ?>" aria-labelledby="<?php echo $headingId; ?>" data-parent="#accordionFactors">
-                        <div class="card-body">
-                            <form action="../includes/guardar_respuesta.php" method="POST" class="save-form" id="form-<?php echo $index; ?>">
-                                <input type="hidden" name="id_factor_1" value="<?php echo $factor1['id_factor']; ?>">
-                                <input type="hidden" name="id_factor_2" value="<?php echo $factor2['id_factor']; ?>">
-                                <input type="hidden" name="id_categoria" value="1"> <!-- Cambia este valor según la categoría -->
-                                <div class="row mb-4">
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title"><?php echo $factor1['nombre_factor']; ?></h5>
-                                                <p class="card-text"><?php echo $factor1['contenido_factor']; ?></p>
+                        <div id="<?php echo $collapseId; ?>" class="collapse <?php echo $index === 0 ? 'show' : ''; ?>" aria-labelledby="<?php echo $headingId; ?>" data-parent="#accordionFactors">
+                            <div class="card-body">
+                                <form action="../includes/guardar_respuesta.php" method="POST" class="save-form" id="form-<?php echo $index; ?>">
+                                    <input type="hidden" name="id_factor_1" value="<?php echo $factor1['id_factor']; ?>">
+                                    <input type="hidden" name="id_factor_2" value="<?php echo $factor2['id_factor']; ?>">
+                                    <input type="hidden" name="id_categoria" value="1"> <!-- Cambia este valor según la categoría -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><?php echo $factor1['nombre_factor']; ?></h5>
+                                                    <p class="card-text"><?php echo $factor1['contenido_factor']; ?></p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <input type="range" class="form-control-range factor-range <?php echo $disabled_class; ?>" id="factor-<?php echo $index; ?>-1" name="porcentaje1" min="0" max="100" value="<?php echo $porcentaje_guardado_1; ?>" <?php echo $respuesta_guardada ? 'disabled' : ''; ?> oninput="updateRange(this, <?php echo $index; ?>, 1)">
+                                                    <output><?php echo $porcentaje_guardado_1; ?></output>
+                                                </div>
                                             </div>
-                                            <div class="card-footer">
-                                                <input type="range" class="form-control-range factor-range <?php echo $disabled_class; ?>" id="factor-<?php echo $index; ?>-1" name="porcentaje1" min="0" max="100" value="<?php echo $porcentaje_guardado_1; ?>" <?php echo $respuesta_guardada ? 'disabled' : ''; ?> oninput="updateRange(this, <?php echo $index; ?>, 1)">
-                                                <output><?php echo $porcentaje_guardado_1; ?></output>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><?php echo $factor2['nombre_factor']; ?></h5>
+                                                    <p class="card-text"><?php echo $factor2['contenido_factor']; ?></p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <input type="range" class="form-control-range factor-range <?php echo $disabled_class; ?>" id="factor-<?php echo $index; ?>-2" name="porcentaje2" min="0" max="100" value="<?php echo $porcentaje_guardado_2; ?>" <?php echo $respuesta_guardada ? 'disabled' : ''; ?> oninput="updateRange(this, <?php echo $index; ?>, 2)">
+                                                    <output><?php echo $porcentaje_guardado_2; ?></output>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title"><?php echo $factor2['nombre_factor']; ?></h5>
-                                                <p class="card-text"><?php echo $factor2['contenido_factor']; ?></p>
-                                            </div>
-                                            <div class="card-footer">
-                                                <input type="range" class="form-control-range factor-range <?php echo $disabled_class; ?>" id="factor-<?php echo $index; ?>-2" name="porcentaje2" min="0" max="100" value="<?php echo $porcentaje_guardado_2; ?>" <?php echo $respuesta_guardada ? 'disabled' : ''; ?> oninput="updateRange(this, <?php echo $index; ?>, 2)">
-                                                <output><?php echo $porcentaje_guardado_2; ?></output>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary" <?php echo $respuesta_guardada ? 'disabled' : ''; ?>>Guardar</button>
-                            </form>
+                                    <button type="submit" class="btn btn-primary" <?php echo $respuesta_guardada ? 'disabled' : ''; ?>>Guardar</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <p>No hay pares de factores definidos.</p>
+            <?php endif; ?>
         </div>
         <div class="text-center mt-4">
             <button id="continueBtn" class="btn btn-success" style="display: none;" onclick="location.href='categoria2.php';">Continuar a la siguiente página</button>
@@ -136,7 +150,6 @@ $pares_contestados = count($respuestas);
             <span class="text-muted">Progreso: <span id="progressPercentage"></span>%</span>
         </div>
     </footer>
-
     <?php include '../includes/footer.php'; ?>
 
     <script>
@@ -154,6 +167,20 @@ $pares_contestados = count($respuestas);
             // Actualizar los valores de salida
             currentRange.nextElementSibling.value = currentRange.value;
             oppositeRange.nextElementSibling.value = oppositeRange.value;
+            validateSaveButton(pairIndex);
+        }
+
+        // Función para validar y habilitar/deshabilitar el botón de guardar
+        function validateSaveButton(pairIndex) {
+            var range1 = document.getElementById('factor-' + pairIndex + '-1');
+            var range2 = document.getElementById('factor-' + pairIndex + '-2');
+            var saveButton = document.querySelector('#form-' + pairIndex + ' .btn-primary');
+
+            if (range1.value === '0' && range2.value === '0') {
+                saveButton.disabled = true;
+            } else {
+                saveButton.disabled = false;
+            }
         }
 
         $(document).ready(function() {
@@ -197,6 +224,9 @@ $pares_contestados = count($respuestas);
                     }
                 });
             });
+            <?php foreach ($pares as $index => $par) : ?>
+                validateSaveButton(<?php echo $index; ?>);
+            <?php endforeach; ?>
 
             // Inicializar el progreso
             updateProgress();
@@ -216,4 +246,5 @@ $pares_contestados = count($respuestas);
         }
     </script>
 </body>
+
 </html>

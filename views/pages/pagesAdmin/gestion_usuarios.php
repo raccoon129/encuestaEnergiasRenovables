@@ -129,7 +129,7 @@ if ($result->num_rows > 0) {
 
                     if (username) {
                         var sector = isAdmin ? 'admon' : sectorId;
-                        $.post('../includes/crear_usuario.php', {
+                        $.post('../../includes/crear_usuario.php', {
                             username: username,
                             password: password,
                             sector: sector

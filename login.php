@@ -30,7 +30,7 @@
             </form>
         </div>
         <div class="col-md-6 info-section">
-            <h2>Encuesta para la implementación de energía renovable en México</h2>
+            <h2>Encuesta para evaluar las barreras para la adopción de energía renovable en México</h2>
             <p>Bienvenido al sistema de encuestas. Por favor, inicie sesión con su usuario y contraseña previamente proporcionado para continuar.</p>
             <p>Si es un administrador, será redirigido al panel administrativo donde podrá visualizar los resultados de las encuestas.</p>
             <p>Si es un usuario encuestado, será redirigido a la encuesta correspondiente.</p>
