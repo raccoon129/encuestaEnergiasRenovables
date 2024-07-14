@@ -10,7 +10,7 @@
 <div class="main-content">
     <div class="container">
         <h1>Panel Administrativo</h1>
-        <p>Bienvenido, <?php echo $_SESSION['usuario']; ?></p>
+<br>
         <div class="row">
             <div class="col-md-4">
                 <div class="card">

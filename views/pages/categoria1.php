@@ -167,7 +167,7 @@ $pares_contestados = count($respuestas);
             <?php endif; ?>
         </div>
         <div class="text-center mt-4">
-            <button id="continueBtn" class="btn btn-success" style="display: none;">Continuar</button>
+            <button id="continueBtn" class="btn btn-success" style="display: none;" onclick="location.href='categoria2.php';">Continuar a la siguiente página</button>
         </div>
         <div class="text-center mt-4">
             <p>Progreso: <span id="progressPercentage">0</span>%</p>
