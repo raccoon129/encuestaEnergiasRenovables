@@ -49,7 +49,7 @@ $pares_contestados = count($respuestas);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Red Conexión A - Encuesta</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><!-- Versión completa de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -65,6 +65,31 @@ $pares_contestados = count($respuestas);
         .disabled-range {
             pointer-events: none;
             background-color: #e9ecef;
+        }
+
+        .toast-success {
+            background-color: #51a351 !important;
+            color: white !important;
+        }
+
+        .toast-error {
+            background-color: #bd362f !important;
+            color: white !important;
+        }
+
+        .toast-info {
+            background-color: #2f96b4 !important;
+            color: white !important;
+        }
+
+        .toast-warning {
+            background-color: #f89406 !important;
+            color: white !important;
+        }
+
+        .btn-respondido {
+            background-color: #28a745 !important;
+            color: white !important;
         }
     </style>
 </head>
@@ -87,6 +112,8 @@ $pares_contestados = count($respuestas);
                     $porcentaje_guardado_2 = $respuesta_guardada ? ($respuestas[$par[0] . '-' . $par[1]]['factor_dominante'] == $par[1] ? $respuestas[$par[0] . '-' . $par[1]]['porcentaje_incidencia'] : 0) : 0;
                     $disabled_class = $respuesta_guardada ? 'disabled-range' : '';
                     $completed_class = $respuesta_guardada ? 'completed' : '';
+                    $button_text = $respuesta_guardada ? 'Respondido' : 'Guardar';
+                    $button_class = $respuesta_guardada ? 'btn-respondido' : 'btn-primary';
                     ?>
                     <div class="card <?php echo $completed_class; ?>" id="card-<?php echo $index; ?>">
                         <div class="card-header" id="<?php echo $headingId; ?>">
@@ -129,7 +156,7 @@ $pares_contestados = count($respuestas);
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary" <?php echo $respuesta_guardada ? 'disabled' : ''; ?>>Guardar</button>
+                                    <button type="submit" class="btn <?php echo $button_class; ?>" <?php echo $respuesta_guardada ? 'disabled' : ''; ?>><?php echo $button_text; ?></button>
                                 </form>
                             </div>
                         </div>
@@ -140,17 +167,15 @@ $pares_contestados = count($respuestas);
             <?php endif; ?>
         </div>
         <div class="text-center mt-4">
-            <button id="continueBtn" class="btn btn-success" style="display: none;" onclick="location.href='categoria2.php';">Continuar a la siguiente página</button>
+            <button id="continueBtn" class="btn btn-success" style="display: none;">Continuar</button>
+        </div>
+        <div class="text-center mt-4">
+            <p>Progreso: <span id="progressPercentage">0</span>%</p>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
         </div>
     </div>
-
-    <!-- Footer con el progreso -->
-    <footer class="footer mt-auto py-3">
-        <div class="container">
-            <span class="text-muted">Progreso: <span id="progressPercentage"></span>%</span>
-        </div>
-    </footer>
-    <?php include '../includes/footer.php'; ?>
 
     <script>
         // Función para actualizar los ranges
@@ -184,6 +209,24 @@ $pares_contestados = count($respuestas);
         }
 
         $(document).ready(function() {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
             $('.save-form').on('submit', function(event) {
                 event.preventDefault();
                 var $form = $(this);
@@ -198,7 +241,7 @@ $pares_contestados = count($respuestas);
 
                             // Deshabilitar los elementos del formulario
                             $form.find('input[type=range]').addClass('disabled-range').prop('disabled', true);
-                            $form.find('button[type=submit]').text('Guardado').addClass('btn-success').prop('disabled', true);
+                            $form.find('button[type=submit]').text('Respondido').addClass('btn-respondido').prop('disabled', true);
                             $form.closest('.card').addClass('completed');
 
                             // Contraer el acordeón actual y abrir el siguiente
@@ -224,6 +267,7 @@ $pares_contestados = count($respuestas);
                     }
                 });
             });
+
             <?php foreach ($pares as $index => $par) : ?>
                 validateSaveButton(<?php echo $index; ?>);
             <?php endforeach; ?>
@@ -239,11 +283,13 @@ $pares_contestados = count($respuestas);
             var progressPercentage = Math.round((completedCards / totalCards) * 100);
 
             $('#progressPercentage').text(progressPercentage);
+            $('.progress-bar').css('width', progressPercentage + '%').attr('aria-valuenow', progressPercentage);
 
             if (completedCards === totalCards) {
                 $('#continueBtn').show();
             }
         }
+        
     </script>
 </body>
 
