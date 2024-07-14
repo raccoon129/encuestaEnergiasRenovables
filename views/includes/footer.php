@@ -1,6 +1,6 @@
 <?php
 //session_start();
-include '../../db.php';
+include '../db.php';
 $id_usuario = $_SESSION['id_usuario'];
 $sql_progreso = "SELECT COUNT(*) AS respuestas_contestadas FROM Respuesta WHERE id_encuesta IN (SELECT id_encuesta FROM Encuesta WHERE id_usuario = $id_usuario)";
 $result_progreso = $conn->query($sql_progreso);

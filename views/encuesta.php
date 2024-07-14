@@ -8,22 +8,31 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../styles/stylesEncuesta.css">
+    <style>
+        body {
+            overflow: hidden; /* evita que haya una barra de desplazamiento en la página principal */
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100vh; /* ajusta el alto del iframe al alto de la pantalla */
+            overflow: auto; /* permite que haya una barra de desplazamiento dentro del iframe si es necesario */
+        }
+    </style>
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100" scrolling="no"> <!-- evita que haya una barra de desplazamiento en la página principal -->
 
 <?php include 'includes/header.php'; ?>
 
 <div class="container-fluid encuesta-container d-flex flex-column h-100">
     <div class="row flex-grow-1">
         <div class="col">
-            <div class="embed-responsive embed-responsive-16by9 h-100">
-                <iframe id="encuestaFrame" class="embed-responsive-item h-100" src="pages/introduccion.php"></iframe>
-            </div>
+            <iframe src="pages/introduccion.php" frameborder="0" marginheight="0" marginwidth="0" scrolling="yes"></iframe>
         </div>
     </div>
 </div>
 
-<?php //include 'includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
 
 </body>
 </html>
