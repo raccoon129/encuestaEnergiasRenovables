@@ -118,13 +118,13 @@ $pares_contestados = count($respuestas);
                     <div class="card <?php echo $completed_class; ?>" id="card-<?php echo $index; ?>">
                         <div class="card-header" id="<?php echo $headingId; ?>">
                             <h5 class="mb-0">
-                                <button class="btn btn-link <?php echo $index > 0 ? 'collapsed' : ''; ?>" type="button" data-toggle="collapse" data-target="#<?php echo $collapseId; ?>" aria-expanded="<?php echo $index === 0 ? 'true' : 'false'; ?>" aria-controls="<?php echo $collapseId; ?>">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#<?php echo $collapseId; ?>" aria-expanded="false" aria-controls="<?php echo $collapseId; ?>">
                                     <?php echo $factor1['nombre_factor'] . ' vs ' . $factor2['nombre_factor']; ?>
                                 </button>
                             </h5>
                         </div>
 
-                        <div id="<?php echo $collapseId; ?>" class="collapse <?php echo $index === 0 ? 'show' : ''; ?>" aria-labelledby="<?php echo $headingId; ?>" data-parent="#accordionFactors">
+                        <div id="<?php echo $collapseId; ?>" class="collapse" aria-labelledby="<?php echo $headingId; ?>" data-parent="#accordionFactors">
                             <div class="card-body">
                                 <form action="../includes/guardar_respuesta.php" method="POST" class="save-form" id="form-<?php echo $index; ?>">
                                     <input type="hidden" name="id_factor_1" value="<?php echo $factor1['id_factor']; ?>">
@@ -201,10 +201,12 @@ $pares_contestados = count($respuestas);
             var range2 = document.getElementById('factor-' + pairIndex + '-2');
             var saveButton = document.querySelector('#form-' + pairIndex + ' .btn-primary');
 
-            if (range1.value === '0' && range2.value === '0') {
-                saveButton.disabled = true;
-            } else {
-                saveButton.disabled = false;
+            if (saveButton) { // Asegúrate de que saveButton no sea null
+                if (range1.value === '0' && range2.value === '0') {
+                    saveButton.disabled = true;
+                } else {
+                    saveButton.disabled = false;
+                }
             }
         }
 
@@ -212,7 +214,7 @@ $pares_contestados = count($respuestas);
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
-                "newestOnTop": false,
+                "newestOnTop": true,
                 "progressBar": true,
                 "positionClass": "toast-top-right",
                 "preventDuplicates": false,
@@ -274,6 +276,14 @@ $pares_contestados = count($respuestas);
 
             // Inicializar el progreso
             updateProgress();
+
+            // Abrir el último acordeón no respondido
+            var $lastIncompleteCard = $('.card').not('.completed').first();
+            if ($lastIncompleteCard.length) {
+                $lastIncompleteCard.find('.collapse').collapse('show');
+            } else {
+                $('#continueBtn').show();
+            }
         });
 
         // Función para actualizar el progreso
@@ -289,8 +299,8 @@ $pares_contestados = count($respuestas);
                 $('#continueBtn').show();
             }
         }
-        
     </script>
 </body>
 
 </html>
+
