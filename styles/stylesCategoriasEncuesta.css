@@ -1,0 +1,37 @@
+.highlight {
+    border: 2px solid #007bff;
+}
+
+.completed {
+    background-color: #d4edda;
+}
+
+.disabled-range {
+    pointer-events: none;
+    background-color: #e9ecef;
+}
+
+.toast-success {
+    background-color: #51a351 !important;
+    color: white !important;
+}
+
+.toast-error {
+    background-color: #bd362f !important;
+    color: white !important;
+}
+
+.toast-info {
+    background-color: #2f96b4 !important;
+    color: white !important;
+}
+
+.toast-warning {
+    background-color: #f89406 !important;
+    color: white !important;
+}
+
+.btn-respondido {
+    background-color: #28a745 !important;
+    color: white !important;
+}

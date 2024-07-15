@@ -174,6 +174,7 @@ $pares_contestados = count($respuestas);
             <div class="progress">
                 <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
+            <br>
         </div>
     </div>
 
@@ -256,6 +257,7 @@ $pares_contestados = count($respuestas);
                             } else {
                                 // Mostrar el botón de continuar si no hay más pares
                                 $('#continueBtn').show();
+                                $('#continueBtn').trigger('click');
                             }
 
                             // Actualizar el progreso
@@ -283,6 +285,7 @@ $pares_contestados = count($respuestas);
                 $lastIncompleteCard.find('.collapse').collapse('show');
             } else {
                 $('#continueBtn').show();
+                $('#continueBtn').trigger('click');
             }
         });
 
@@ -297,10 +300,10 @@ $pares_contestados = count($respuestas);
 
             if (completedCards === totalCards) {
                 $('#continueBtn').show();
+                $('#continueBtn').trigger('click');
             }
         }
     </script>
 </body>
 
 </html>
-
