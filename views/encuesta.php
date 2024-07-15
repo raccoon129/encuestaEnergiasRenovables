@@ -8,16 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../styles/stylesEncuesta.css">
-    <style>
-        body {
-            overflow: hidden; /* evita que haya una barra de desplazamiento en la página principal */
-        }
-        iframe {
-            border: none;
-            width: 100%;
-            height: 100vh; /* ajusta el alto del iframe al alto de la pantalla */
-            overflow: auto; /* permite que haya una barra de desplazamiento dentro del iframe si es necesario */
-        }
+
     </style>
 </head>
 <body class="d-flex flex-column h-100" scrolling="no"> <!-- evita que haya una barra de desplazamiento en la página principal -->

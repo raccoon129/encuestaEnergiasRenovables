@@ -14,3 +14,12 @@ html, body {
     width: 100%;
     border: none;
 }
+body {
+    overflow: hidden; /* evita que haya una barra de desplazamiento en la página principal */
+}
+iframe {
+    border: none;
+    width: 100%;
+    height: 100vh; /* ajusta el alto del iframe al alto de la pantalla */
+    overflow: auto; /* permite que haya una barra de desplazamiento dentro del iframe si es necesario */
+}

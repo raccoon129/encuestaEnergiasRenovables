@@ -20,7 +20,7 @@ session_start();
 
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">
-            Encuesta Energías Renovables - Administrador
+            Encuesta para evaluar las barreras para la adopción de energía renovable en México - Administrador
         </a>
         <form class="form-inline">
             <a href="includes/logout.php" class="btn btn-danger my-2 my-sm-0">Cerrar Sesión</a>
