@@ -49,7 +49,7 @@ if ($result_categorias->num_rows > 0) {
                     <th>Factor</th>
                     <th>Porcentaje Factor 1</th>
                     <th>Porcentaje Factor 2</th>
-                    <th>Factor 2</th>
+                    <th>Factor</th>
                 </tr>";
 
         // Consultar todas las respuestas para el usuario y la categoría actual

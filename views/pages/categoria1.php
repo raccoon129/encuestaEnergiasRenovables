@@ -53,45 +53,7 @@ $pares_contestados = count($respuestas);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <style>
-        .highlight {
-            border: 2px solid #007bff;
-        }
-
-        .completed {
-            background-color: #d4edda;
-        }
-
-        .disabled-range {
-            pointer-events: none;
-            background-color: #e9ecef;
-        }
-
-        .toast-success {
-            background-color: #51a351 !important;
-            color: white !important;
-        }
-
-        .toast-error {
-            background-color: #bd362f !important;
-            color: white !important;
-        }
-
-        .toast-info {
-            background-color: #2f96b4 !important;
-            color: white !important;
-        }
-
-        .toast-warning {
-            background-color: #f89406 !important;
-            color: white !important;
-        }
-
-        .btn-respondido {
-            background-color: #28a745 !important;
-            color: white !important;
-        }
-    </style>
+    <link rel="stylesheet" href="../../styles/stylesCategoriasEncuesta.css">
 </head>
 
 <body>
@@ -196,6 +158,29 @@ $pares_contestados = count($respuestas);
             validateSaveButton(pairIndex);
         }
 
+                // Función para verificar si todos los pares han sido contestados
+                function verificarRespuestas() {
+            var pares = <?php echo json_encode($pares); ?>;
+            var respuestas = <?php echo json_encode($respuestas); ?>;
+            var totalPares = pares.length;
+            var paresContestados = Object.keys(respuestas).length;
+
+            var progressPercentage = (paresContestados / totalPares) * 100;
+            document.getElementById('progressPercentage').innerText = progressPercentage.toFixed(0);
+            document.querySelector('.progress-bar').style.width = progressPercentage + '%';
+
+            if (paresContestados === totalPares) {
+                document.getElementById('continueBtn').style.display = 'block';
+            } else {
+                document.getElementById('continueBtn').style.display = 'none';
+            }
+        }
+
+        // Inicializar progreso y botón continuar al cargar la página
+        $(document).ready(function() {
+            verificarRespuestas();
+        });
+
         // Función para validar y habilitar/deshabilitar el botón de guardar
         function validateSaveButton(pairIndex) {
             var range1 = document.getElementById('factor-' + pairIndex + '-1');
@@ -256,8 +241,8 @@ $pares_contestados = count($respuestas);
                                 $nextCard.collapse('show');
                             } else {
                                 // Mostrar el botón de continuar si no hay más pares
-                                $('#continueBtn').show();
-                                $('#continueBtn').trigger('click');
+
+
                             }
 
                             // Actualizar el progreso
