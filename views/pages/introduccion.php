@@ -22,6 +22,9 @@ if (!isset($_SESSION['username'])) {
     <div class="alert alert-info" role="alert">
         Aquí podrían ir más indicaciones.
     </div>
+    <div class="alert alert-danger" role="alert">
+        La encuesta está optimizada para ser respondida desde un entorno de escritorio (PC)
+    </div>
     <a href="categoria1.php" class="btn btn-primary">Comenzar Encuesta</a>
 </div>
 </body>

@@ -20,9 +20,9 @@ if ($result && $result->num_rows > 0) {
 }
 
 // Definir los pares de factores
-$pares = [
-    [3, 4], [3, 5], [3, 6], [3, 7], [3, 8], [3, 9], [3, 10], [3, 11],
-    [3, 12], [3, 13], [3, 14], [3, 15], [3, 16], [3, 17], [3, 18]
+$pares = [ 
+    [9, 10], [9, 11],
+    [9, 12], [9, 13], [9, 14], [9, 15], [9, 16], [9, 17], [9, 18]
 ];
 
 // Obtener las respuestas guardadas del usuario
@@ -58,8 +58,13 @@ $pares_contestados = count($respuestas);
 
 <body>
     <div class="container mt-5">
-        <h2>Categoría 3 - Inf Tec C</h2>
+        <h2>Categoría 9 - Conciencia I</h2>
         <br>
+        <div class="alert alert-primary" role="alert">
+            ¿Qué factor representa una barrera para la implementación de energía renovable en México? <br>
+            Seleccione el control deslizante relacionado al factor de su preferencia y desplacelo de acuerdo
+            a su inclinación. Puede elegir solo uno por cada par.
+        </div>
         <div class="accordion" id="accordionFactors">
             <?php if (!empty($pares)) : ?>
                 <?php foreach ($pares as $index => $par) : ?>
@@ -91,7 +96,7 @@ $pares_contestados = count($respuestas);
                                 <form action="../includes/guardar_respuesta.php" method="POST" class="save-form" id="form-<?php echo $index; ?>">
                                     <input type="hidden" name="id_factor_1" value="<?php echo $factor1['id_factor']; ?>">
                                     <input type="hidden" name="id_factor_2" value="<?php echo $factor2['id_factor']; ?>">
-                                    <input type="hidden" name="id_categoria" value="3"> <!-- Cambia este valor según la categoría -->
+                                    <input type="hidden" name="id_categoria" value="9"> <!-- Cambia este valor según la categoría -->
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="card">
@@ -129,7 +134,7 @@ $pares_contestados = count($respuestas);
             <?php endif; ?>
         </div>
         <div class="text-center mt-4">
-            <button id="continueBtn" class="btn btn-success" style="display: none;" onclick="location.href='categoria4.php';">Continuar a la siguiente página</button>
+            <button id="continueBtn" class="btn btn-success" style="display: none;" onclick="location.href='categoria10.php';">Continuar a la siguiente página</button>
         </div>
         <div class="text-center mt-4">
             <p>Progreso: <span id="progressPercentage">0</span>%</p>

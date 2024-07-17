@@ -1,6 +1,7 @@
 <?php
-session_start();
-//require 'includes/session_check.php'
+//session_start();
+include 'includes/session_check.php';
+check_access('admon');
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -6,7 +6,7 @@ $sql_progreso = "SELECT COUNT(*) AS respuestas_contestadas FROM Respuesta WHERE 
 $result_progreso = $conn->query($sql_progreso);
 $row_progreso = $result_progreso->fetch_assoc();
 $respuestas_contestadas = $row_progreso['respuestas_contestadas'];
-$total_respuestas = 17 * 17; // 17 categorías y 17 pares por categoría
+$total_respuestas = 18 * 8.5; // 17 categorías y 17 pares por categoría
 $progreso = ($respuestas_contestadas / $total_respuestas) * 100;
 ?>
 

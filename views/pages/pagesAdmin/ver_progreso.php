@@ -58,7 +58,8 @@ if ($result_categorias->num_rows > 0) {
                            JOIN Encuesta ON Respuesta.id_encuesta = Encuesta.id_encuesta
                            JOIN Factor AS Factor1 ON Respuesta.id_factor_1 = Factor1.id_factor
                            JOIN Factor AS Factor2 ON Respuesta.id_factor_2 = Factor2.id_factor
-                           WHERE Encuesta.id_usuario = $id_usuario AND Encuesta.id_categoria = " . $categoria['id_categoria'];
+                           WHERE Encuesta.id_usuario = $id_usuario AND Encuesta.id_categoria = " . $categoria['id_categoria'] . "
+                           ORDER BY Respuesta.id_factor_1 DESC, Respuesta.id_factor_2 ASC";
         $result_respuestas = $conn->query($sql_respuestas);
 
         // Verificar si hay respuestas para la categoría actual
