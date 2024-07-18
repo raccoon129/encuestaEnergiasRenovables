@@ -1,6 +1,8 @@
 <?php
 include '../../../db.php';
-
+include '../../includes/session_check.php';
+// Permitir acceso solo a administradores
+check_access(['admon']);
 $id_usuario = $_GET['id_usuario'];
 
 // Obtener el ID del usuario desde los parámetros GET

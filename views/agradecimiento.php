@@ -1,4 +1,10 @@
-
+<?php
+session_start();
+if (!isset($_SESSION['username']) || !isset($_SESSION['check_respuesta']) || $_SESSION['check_respuesta'] != 1) {
+    header("Location: ../login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

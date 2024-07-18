@@ -1,5 +1,9 @@
 <?php
-session_start();
+
+include '../../includes/session_check.php';
+// Permitir acceso solo a administradores
+check_access(['admon']);
+
 include '../../../db.php';
 
 // Consultar los usuarios y sectores
@@ -35,7 +39,7 @@ if ($result->num_rows > 0) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-2">
         <h2>Resultados de Encuestas</h2>
         <table id="resultados" class="display">
             <thead>

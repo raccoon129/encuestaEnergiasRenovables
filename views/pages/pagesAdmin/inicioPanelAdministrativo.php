@@ -1,3 +1,9 @@
+<?php
+include '../../includes/session_check.php';
+// Permitir acceso solo a administradores
+check_access(['admon']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

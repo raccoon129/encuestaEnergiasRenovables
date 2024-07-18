@@ -1,3 +1,3 @@
-<?php
-
-echo 'nada que ver por aquí';
+<?
+header("Location: broken.php");
+?>

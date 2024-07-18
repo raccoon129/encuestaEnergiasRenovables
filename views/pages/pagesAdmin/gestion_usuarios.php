@@ -1,22 +1,25 @@
 <?php
-session_start();
 include '../../../db.php';
+include '../../includes/session_check.php';
+// Permitir acceso solo a administradores
+check_access(['admon']);
 
-// Obtener los sectores
-$sql = "SELECT id_sector, nombre_sector FROM Sector";
+// Obtener los sectores, excluyendo el sector 'admon'
+$sql = "SELECT id_sector, nombre_sector FROM Sector WHERE nombre_sector != 'admon'";
 $result = $conn->query($sql);
 
 $sectores = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        if ($row['nombre_sector'] !== 'admon') {
-            $sectores[] = $row;
-        }
+        $sectores[] = $row;
     }
 }
 
-// Obtener los usuarios
-$sql = "SELECT usuario, nombre_sector, check_respuesta FROM Usuario JOIN Sector ON Usuario.id_sector = Sector.id_sector";
+// Obtener los usuarios, ordenados de forma descendente por ID
+$sql = "SELECT Usuario.id_usuario, usuario, nombre_sector, check_respuesta 
+        FROM Usuario 
+        JOIN Sector ON Usuario.id_sector = Sector.id_sector 
+        ORDER BY Usuario.id_usuario DESC";
 $result = $conn->query($sql);
 
 $usuarios = [];
@@ -28,28 +31,33 @@ if ($result->num_rows > 0) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuarios</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="../styles/stylesGestionUsuarios.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-2">
         <div class="row">
             <div class="col-md-8">
                 <h2>Usuarios</h2>
-                <table class="table table-striped">
+                <table id="usuariosTable" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Usuario</th>
                             <th>Sector</th>
                             <th>Encuesta Respondida</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,7 +65,14 @@ if ($result->num_rows > 0) {
                         <tr>
                             <td><?php echo $usuario['usuario']; ?></td>
                             <td><?php echo $usuario['nombre_sector']; ?></td>
-                            <td><?php echo $usuario['check_respuesta'] ? 'Sí' : 'No'; ?></td>
+                            <td><?php echo $usuario['nombre_sector'] === 'admon' ? 'Administrador' : ($usuario['check_respuesta'] ? 'Sí' : 'No'); ?></td>
+                            <td>
+                                <?php if ($usuario['nombre_sector'] !== 'admon' && !$usuario['check_respuesta']): ?>
+                                <button class="btn btn-danger btn-sm eliminar-usuario" data-id="<?php echo $usuario['id_usuario']; ?>">Eliminar</button>
+                                <?php else: ?>
+                                <button class="btn btn-secondary btn-sm" disabled>Eliminar</button>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -111,16 +126,22 @@ if ($result->num_rows > 0) {
 
     <script>
         $(document).ready(function() {
+            // Inicializar DataTable
+            $('#usuariosTable').DataTable();
+
+            // Deshabilita el selector de sector si se marca "Crear como Administrador"
             $('#adminCheck').change(function() {
                 $('#sector').prop('disabled', this.checked);
             });
 
+            // Crear nuevo usuario
             $('#crearUsuarioBtn').click(function(event) {
                 event.preventDefault(); // Prevenir el envío del formulario
 
                 var sectorId = $('#sector').val();
                 var isAdmin = $('#adminCheck').is(':checked');
 
+                // Generar contraseña aleatoria
                 var password = Math.random().toString(36).slice(-12);
 
                 // Obtener nombre de usuario aleatorio desde la API
@@ -129,7 +150,7 @@ if ($result->num_rows > 0) {
 
                     if (username) {
                         var sector = isAdmin ? 'admon' : sectorId;
-                        $.post('../../includes/crear_usuario.php', {
+                        $.post('crear_usuario.php', {
                             username: username,
                             password: password,
                             sector: sector
@@ -162,6 +183,24 @@ if ($result->num_rows > 0) {
             // Recargar la página al cerrar el modal
             $('#usuarioModal').on('hidden.bs.modal', function (e) {
                 location.reload();
+            });
+
+            // Eliminar usuario si no ha iniciado la encuesta
+            $('.eliminar-usuario').click(function() {
+                var userId = $(this).data('id');
+                
+                if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                    $.post('eliminar_usuario.php', {
+                        user_id: userId
+                    }, function(response) {
+                        if (response.success) {
+                            toastr.success('Usuario eliminado con éxito.');
+                            location.reload();
+                        } else {
+                            toastr.error('Error al eliminar el usuario.');
+                        }
+                    }, 'json');
+                }
             });
         });
     </script>

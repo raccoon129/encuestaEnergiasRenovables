@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 if ($row['check_respuesta']) {
                     header("Location: views/agradecimiento.php");
+                    
                 } else {
                     header("Location: views/encuesta.php");
                 }

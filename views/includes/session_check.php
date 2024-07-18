@@ -7,8 +7,8 @@ if (!isset($_SESSION['username']) || !isset($_SESSION['sector'])) {
     exit();
 }
 
-function check_access($required_sector) {
-    if ($_SESSION['sector'] !== $required_sector) {
+function check_access($allowed_sectors) {
+    if (!in_array($_SESSION['sector'], $allowed_sectors)) {
         header("Location: broken.php");
         exit();
     }
