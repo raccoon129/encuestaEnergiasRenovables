@@ -1,5 +1,4 @@
 <?php
-
 include '../../includes/session_check.php';
 // Permitir acceso solo a administradores
 check_access(['admon']);
@@ -19,7 +18,22 @@ if ($result->num_rows > 0) {
         $sql_encuesta = "SELECT COUNT(*) as count FROM Encuesta WHERE id_usuario = " . $row['id_usuario'];
         $result_encuesta = $conn->query($sql_encuesta);
         $row_encuesta = $result_encuesta->fetch_assoc();
-        $row['estado_encuesta'] = $row_encuesta['count'] > 0 ? 'Iniciada' : 'No la ha iniciado';
+
+        // Consultar si el usuario tiene respuestas
+        $sql_respuesta = "SELECT COUNT(*) as count FROM Respuesta 
+                          JOIN Encuesta ON Respuesta.id_encuesta = Encuesta.id_encuesta 
+                          WHERE Encuesta.id_usuario = " . $row['id_usuario'];
+        $result_respuesta = $conn->query($sql_respuesta);
+        $row_respuesta = $result_respuesta->fetch_assoc();
+
+        if ($row['check_respuesta'] == 1) {
+            $row['estado_encuesta'] = 'Completado';
+        } elseif ($row_encuesta['count'] > 0 && $row_respuesta['count'] > 0) {
+            $row['estado_encuesta'] = 'En progreso';
+        } else {
+            $row['estado_encuesta'] = 'No la ha iniciado';
+        }
+
         $usuarios[] = $row;
     }
 }
@@ -44,6 +58,7 @@ if ($result->num_rows > 0) {
         <table id="resultados" class="display">
             <thead>
                 <tr>
+                    <th>ID Usuario</th>
                     <th>Usuario</th>
                     <th>Sector</th>
                     <th>Estado de la Encuesta</th>
@@ -53,15 +68,29 @@ if ($result->num_rows > 0) {
             <tbody>
                 <?php foreach ($usuarios as $usuario): ?>
                 <tr>
+                    <td><?php echo $usuario['id_usuario']; ?></td>
                     <td><?php echo $usuario['usuario']; ?></td>
                     <td><?php echo $usuario['nombre_sector']; ?></td>
                     <td>
-                        <span class="<?php echo $usuario['estado_encuesta'] == 'Iniciada' ? 'text-success' : 'text-warning'; ?>">
+                        <span class="<?php 
+                            if ($usuario['estado_encuesta'] == 'Completado') {
+                                echo 'text-success';
+                            } elseif ($usuario['estado_encuesta'] == 'En progreso') {
+                                echo 'text-warning';
+                            } else {
+                                echo 'text-danger';
+                            }
+                        ?>">
                             <?php echo $usuario['estado_encuesta']; ?>
                         </span>
                     </td>
                     <td>
                         <button class="btn btn-primary ver-progreso" data-id="<?php echo $usuario['id_usuario']; ?>">Ver Progreso</button>
+                        <?php if ($usuario['estado_encuesta'] == 'Completado'): ?>
+                            <button class="btn btn-success descargar-excel" data-id="<?php echo $usuario['id_usuario']; ?>">Descargar excel</button>
+                        <?php else: ?>
+                            <button class="btn btn-secondary" disabled>Descargar excel</button>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -76,6 +105,11 @@ if ($result->num_rows > 0) {
             $('.ver-progreso').click(function() {
                 var userId = $(this).data('id');
                 window.open('ver_progreso.php?id_usuario=' + userId, 'Progreso de la Encuesta', 'width=800,height=600');
+            });
+
+            $('.descargar-excel').click(function() {
+                var userId = $(this).data('id');
+                window.location.href = 'descargar_respuesta.php?id_usuario=' + userId;
             });
         });
     </script>

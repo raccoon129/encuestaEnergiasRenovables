@@ -16,7 +16,10 @@ if ($result->num_rows > 0) {
 }
 
 // Obtener los usuarios, ordenados de forma descendente por ID
-$sql = "SELECT Usuario.id_usuario, usuario, nombre_sector, check_respuesta 
+$sql = "SELECT Usuario.id_usuario, usuario, nombre_sector, 
+               (SELECT COUNT(*) FROM Respuesta 
+                JOIN Encuesta ON Respuesta.id_encuesta = Encuesta.id_encuesta 
+                WHERE Encuesta.id_usuario = Usuario.id_usuario) AS ha_iniciado 
         FROM Usuario 
         JOIN Sector ON Usuario.id_sector = Sector.id_sector 
         ORDER BY Usuario.id_usuario DESC";
@@ -32,6 +35,7 @@ if ($result->num_rows > 0) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,6 +50,7 @@ if ($result->num_rows > 0) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </head>
+
 <body>
     <div class="container mt-2">
         <div class="row">
@@ -61,21 +66,22 @@ if ($result->num_rows > 0) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($usuarios as $usuario): ?>
+                        <?php foreach ($usuarios as $usuario) : ?>
                         <tr>
                             <td><?php echo $usuario['usuario']; ?></td>
                             <td><?php echo $usuario['nombre_sector']; ?></td>
-                            <td><?php echo $usuario['nombre_sector'] === 'admon' ? 'Administrador' : ($usuario['check_respuesta'] ? 'Sí' : 'No'); ?></td>
+                            <td><?php echo $usuario['nombre_sector'] === 'admon' ? 'Administrador' : 'No'; ?></td>
                             <td>
-                                <?php if ($usuario['nombre_sector'] !== 'admon' && !$usuario['check_respuesta']): ?>
+                                <?php if ($usuario['nombre_sector'] === 'admon' && $usuario['ha_iniciado'] == 0) : ?>
                                 <button class="btn btn-danger btn-sm eliminar-usuario" data-id="<?php echo $usuario['id_usuario']; ?>">Eliminar</button>
-                                <?php else: ?>
+                                <?php else : ?>
                                 <button class="btn btn-secondary btn-sm" disabled>Eliminar</button>
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
+
                 </table>
             </div>
             <div class="col-md-4">
@@ -83,15 +89,24 @@ if ($result->num_rows > 0) {
                 <form id="crearUsuarioForm">
                     <div class="form-group">
                         <label for="sector">Sector</label>
-                        <select id="sector" class="form-control" name="sector">
-                            <?php foreach ($sectores as $sector): ?>
+                        <select id="sector" class="form-control" name="sector" disabled>
+                            <?php foreach ($sectores as $sector) : ?>
                             <option value="<?php echo $sector['id_sector']; ?>"><?php echo $sector['nombre_sector']; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="adminCheck">
-                        <label class="form-check-label" for="adminCheck">Crear como Administrador</label>
+                    <div class="form-group">
+                        <label for="tipoUsuario">Tipo de Usuario:</label>
+                        <div id="tipoUsuario">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipoUsuario" id="usuarioNormal" value="normal">
+                                <label class="form-check-label" for="usuarioNormal">Encuestado</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipoUsuario" id="usuarioAdmin" value="admin" checked>
+                                <label class="form-check-label" for="usuarioAdmin">Administrador</label>
+                            </div>
+                        </div>
                     </div>
                     <button type="button" class="btn btn-primary" id="crearUsuarioBtn">Crear</button>
                 </form>
@@ -129,9 +144,13 @@ if ($result->num_rows > 0) {
             // Inicializar DataTable
             $('#usuariosTable').DataTable();
 
-            // Deshabilita el selector de sector si se marca "Crear como Administrador"
-            $('#adminCheck').change(function() {
-                $('#sector').prop('disabled', this.checked);
+            // Habilitar/deshabilitar el selector de sector según el tipo de usuario seleccionado
+            $('input[name="tipoUsuario"]').change(function() {
+                if ($('#usuarioAdmin').is(':checked')) {
+                    $('#sector').prop('disabled', true);
+                } else {
+                    $('#sector').prop('disabled', false);
+                }
             });
 
             // Crear nuevo usuario
@@ -139,7 +158,8 @@ if ($result->num_rows > 0) {
                 event.preventDefault(); // Prevenir el envío del formulario
 
                 var sectorId = $('#sector').val();
-                var isAdmin = $('#adminCheck').is(':checked');
+                var tipoUsuario = $('input[name="tipoUsuario"]:checked').val();
+                var isAdmin = (tipoUsuario === 'admin');
 
                 // Generar contraseña aleatoria
                 var password = Math.random().toString(36).slice(-12);
@@ -150,27 +170,35 @@ if ($result->num_rows > 0) {
 
                     if (username) {
                         var sector = isAdmin ? 'admon' : sectorId;
+                        console.log({
+                            username: username,
+                            password: password,
+                            sector: sector
+                        }); // Agrega esto para depurar
                         $.post('crear_usuario.php', {
                             username: username,
                             password: password,
                             sector: sector
                         }, function(response) {
+                            console.log(response); // Agrega esto para depurar
                             if (response.success) {
                                 // Actualizar el contenido del textarea con las credenciales
                                 var credenciales = 'Encuesta para la adopción de energía renovable en México.\n\nLe agradecería que contestase nuestra encuesta.\n\nUsuario: ' + username + '\nContraseña: ' + password + '\n\nGracias.';
                                 $('#credencialesTextArea').val(credenciales);
                                 $('#usuarioModal').modal('show');
+                                toastr.success('Usuario creado con éxito.');
                             } else {
-                                alert('Error al crear el usuario.');
+                                toastr.error('Error al crear el usuario: ' + response.message);
                             }
                         }, 'json');
                     } else {
-                        alert('Error al obtener el nombre de usuario desde la API.');
+                        toastr.error('Error al obtener el nombre de usuario desde la API.');
                     }
                 }).fail(function() {
-                    alert('Error al conectar con la API de generación de nombres de usuario.');
+                    toastr.error('Error al conectar con la API de generación de nombres de usuario.');
                 });
             });
+
 
             // Copiar credenciales al portapapeles
             $('#copiarCredenciales').click(function() {
@@ -181,14 +209,14 @@ if ($result->num_rows > 0) {
             });
 
             // Recargar la página al cerrar el modal
-            $('#usuarioModal').on('hidden.bs.modal', function (e) {
+            $('#usuarioModal').on('hidden.bs.modal', function(e) {
                 location.reload();
             });
 
             // Eliminar usuario si no ha iniciado la encuesta
             $('.eliminar-usuario').click(function() {
                 var userId = $(this).data('id');
-                
+
                 if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
                     $.post('eliminar_usuario.php', {
                         user_id: userId
@@ -205,4 +233,5 @@ if ($result->num_rows > 0) {
         });
     </script>
 </body>
+
 </html>
