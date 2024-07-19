@@ -60,6 +60,11 @@ $pares_contestados = count($respuestas);
     <div class="container mt-5">
         <h2>Categoría 1 - Red Conexión A</h2>
         <br>
+        <div class="alert alert-primary" role="alert">
+            ¿Qué factor representa una barrera para la implementación de energía renovable en México? <br>
+            Seleccione el control deslizante relacionado al factor de su preferencia y desplacelo de acuerdo
+            a su inclinación. Puede elegir solo uno por cada par.
+        </div>
         <div class="accordion" id="accordionFactors">
             <?php if (!empty($pares)) : ?>
                 <?php foreach ($pares as $index => $par) : ?>
