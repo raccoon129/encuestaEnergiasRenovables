@@ -1,5 +1,5 @@
 <?php
-//YA FUNCIONA TOTALMENTE
+//YA FUNCIONA TOTALMENTE PERO NO TIENE FORMATO GENERA EN VERTICAL
 require '../../../vendor/autoload.php'; // Ajusta la ruta según tu estructura de proyecto
 include '../../../db.php';
 include '../../includes/session_check.php';

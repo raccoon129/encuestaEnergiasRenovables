@@ -1,6 +1,6 @@
 <?php
 include '../../../db.php';
-
+//ARCHIVO DE FUNCIONALIDAD
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $_POST['user_id'];
 

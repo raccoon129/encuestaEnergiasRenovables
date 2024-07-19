@@ -16,7 +16,8 @@ check_access(['admon']);
 <div class="main-content">
     <div class="container">
         <h1>Panel Administrativo</h1>
-<br>
+        <br>
+        <h5>Opciones disponibles</h5>
         <div class="row">
             <div class="col-md-4">
                 <div class="card">

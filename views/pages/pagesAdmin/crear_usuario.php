@@ -1,12 +1,13 @@
 <?php
 include '../../../db.php';
 
+// Verificar si la solicitud es de tipo POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Cifrar la contraseña usando BCRYPT
     $sector = $_POST['sector'];
 
-    // Registra los datos recibidos para depuración
+    // Registrar los datos recibidos para depuración
     error_log("Datos recibidos: username=$username, sector=$sector");
 
     // Si el sector es "admon", obtenemos su id_sector

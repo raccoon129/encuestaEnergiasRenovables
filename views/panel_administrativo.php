@@ -10,7 +10,7 @@ check_access(['admon']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Administrativo - Encuesta Energías Renovables</title>
+    <title>Panel Administrativo - Encuesta para evaluar las barreras de la adopción de energía renovable en México</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -22,7 +22,7 @@ check_access(['admon']);
 
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">
-            Encuesta para evaluar las barreras para la adopción de energía renovable en México - Administrador
+            Encuesta para evaluar las barreras de la adopción de energía renovable en México - Administrador
         </a>
         <form class="form-inline">
             <a href="includes/logout.php" class="btn btn-danger my-2 my-sm-0">Cerrar Sesión</a>

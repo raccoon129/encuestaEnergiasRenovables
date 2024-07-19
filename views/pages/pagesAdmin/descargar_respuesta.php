@@ -2,7 +2,7 @@
 require '../../../vendor/autoload.php'; // Ajusta la ruta según tu estructura de proyecto
 include '../../../db.php';
 include '../../includes/session_check.php';
-
+//YA FUNCIONA PERO NO TIENE EL FORMATO (GENERA EN HORIZONTAL)
 // Permitir acceso solo a administradores
 check_access(['admon']);
 

@@ -3,7 +3,7 @@ include '../../../db.php';
 include '../../includes/session_check.php';
 // Permitir acceso solo a administradores
 check_access(['admon']);
-$id_usuario = $_GET['id_usuario'];
+//$id_usuario = $_GET['id_usuario'];
 
 // Obtener el ID del usuario desde los parámetros GET
 $id_usuario = $_GET['id_usuario'];
@@ -21,9 +21,11 @@ if ($result_categorias->num_rows > 0) {
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <title>Progreso de la Encuesta</title>
+        
         <style>
             body {
                 text-align: center; /* Centrar el contenido del cuerpo */
+                font-family: Arial, Helvetica, sans-serif;
             }
             table {
                 margin: 0 auto; /* Centrar las tablas */
@@ -39,6 +41,8 @@ if ($result_categorias->num_rows > 0) {
         </style>
     </head>
     <body>";
+    echo "<h1> Progreso del encuestado</h1>";
+    echo 'ID del usuario: '. $id_usuario;
 
     // Iterar a través de todas las categorías para crear una tabla para cada una
     while ($categoria = $result_categorias->fetch_assoc()) {

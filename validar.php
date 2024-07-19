@@ -2,6 +2,7 @@
 session_start();
 include 'db.php';
 
+// Función para limpiar la entrada de datos y evitar inyecciones XSS
 function clean_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -9,6 +10,7 @@ function clean_input($data) {
     return $data;
 }
 
+// Verificar si la solicitud es de tipo POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = clean_input($_POST['username']);
     $password = clean_input($_POST['password']);
@@ -26,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
 
-        // Verificación de la contraseña
-        if ($password === $row['password']) { // Comparación directa, queda pendiente hashear
+        // Verificación de la contraseña cifrada
+        if (password_verify($password, $row['password'])) { // Comparar la contraseña ingresada con la cifrada
             $_SESSION['username'] = $username;
             $_SESSION['id_usuario'] = $row['id_usuario'];
             $_SESSION['sector'] = $row['nombre_sector'];
@@ -46,11 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             }
         } else {
+            // Contraseña incorrecta
             $_SESSION['error'] = "Contraseña incorrecta";
             header("Location: login.php");
             exit();
         }
     } else {
+        // Usuario no encontrado
         $_SESSION['error'] = "Usuario no encontrado";
         header("Location: login.php");
         exit();

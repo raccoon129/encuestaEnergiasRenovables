@@ -7,7 +7,7 @@ if (!isset($_SESSION['username'])) {
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Encuesta para evaluar las barreras para la adopción de energía renovable en México</a>
+    <a class="navbar-brand" href="#">Encuesta para evaluar las barreras de la adopción de energía renovable en México</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
