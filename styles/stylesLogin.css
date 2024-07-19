@@ -1,32 +1,32 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
 }
 
-.background {
+#background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../img/imagen.jpg'); /* Cambia 'collage.jpg' por el nombre de tu collage */
-    background-size: cover;
-    background-position: center;
-    filter: blur(5px) brightness(90%); /* Ajusta el valor de 'blur()' para controlar el desenfoque y 'brightness()' para el brillo */
     z-index: -1;
-    transform: scale(1.1); /* Agrega esta línea y ajusta el valor según sea necesario */
-    transform-origin: center; /* Agrega esta línea para que el zoom se centre en el medio del contenedor */
 }
 
 .container {
     max-width: 900px;
-    background: rgba(255, 255, 255, 0.99); /* valor de la opacidad según sea necesario */
+    background: rgba(0, 0, 0, 0.95);
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    z-index: 1;
 }
 
 .login-form {
