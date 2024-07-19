@@ -58,7 +58,7 @@
                     { src: "img/5.jpg" },
                     { src: "img/6.jpg" }
                 ],
-                transition: [ 'fade', 'zoomOut', 'blurLeft' ],
+                transition: [ 'fade', 'zoomOut'],
                 animation: [ 'kenburnsUp', 'kenburnsDown', 'kenburnsLeft', 'kenburnsRight' ],
                 transitionDuration: 2000,
                 delay: 7000,

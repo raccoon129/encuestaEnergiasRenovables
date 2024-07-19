@@ -33,6 +33,9 @@ check_access(['admon']);
         <a href="#inicio" onclick="loadPage('pages/pagesAdmin/inicioPanelAdministrativo.php')"><i class="fas fa-home"></i> Inicio</a>
         <a href="#gestionUsuarios" onclick="loadPage('pages/pagesAdmin/gestion_usuarios.php')"><i class="fas fa-users"></i> Gestión de Usuarios</a>
         <a href="#verResultados" onclick="loadPage('pages/pagesAdmin/ver_resultados.php')"><i class="fas fa-chart-bar"></i> Ver Resultados</a>
+        <a href="#verResultados" onclick="loadPage('pages/pagesAdmin/gestion_factores.php')"><i class="fas fa-window-maximize"></i> Modificar Factores</a>
+        <a href="#verResultados" onclick="loadPage('pages/pagesAdmin/gestion_sectores.php')"><i class="fas fa-address-card"></i> Actualizar Sectores</a>
+        <a href="#verResultados" onclick="loadPage('pages/pagesAdmin/gestion_categorias.php')"><i class="fas fa-crosshairs"></i> Cambiar Categorías</a>
     </div>
 
     <div class="main-content">
