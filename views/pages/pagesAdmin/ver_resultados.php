@@ -47,10 +47,11 @@ if ($result->num_rows > 0) {
     <title>Resultados de Encuestas</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../styles/stylesCategoriasEncuesta.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-2">
@@ -97,7 +98,7 @@ if ($result->num_rows > 0) {
             </tbody>
         </table>
     </div>
-
+    
     <script>
         $(document).ready(function() {
             $('#resultados').DataTable();
@@ -109,8 +110,38 @@ if ($result->num_rows > 0) {
 
             $('.descargar-excel').click(function() {
                 var userId = $(this).data('id');
-                window.location.href = 'descargar_respuesta.php?id_usuario=' + userId;
+                
+                $.ajax({
+                    url: 'descargar_respuesta.php',
+                    type: 'GET',
+                    data: { id_usuario: userId },
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function(data, textStatus, xhr) {
+                        var disposition = xhr.getResponseHeader('Content-Disposition');
+                        var fileName = disposition.match(/filename="(.+)"/)[1];
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(data);
+                        link.download = fileName;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+
+                        toastr.success('El archivo Excel se ha generado y descargado exitosamente.');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        toastr.error('Hubo un problema al generar o descargar el archivo Excel.');
+                    }
+                });
             });
+
+            // Mostrar notificaciones basadas en la URL
+            <?php if (isset($_GET['success']) && $_GET['success'] == 1) { ?>
+                toastr.success('El archivo Excel se ha generado y descargado exitosamente.');
+            <?php } elseif (isset($_GET['success']) && $_GET['success'] == 0) { ?>
+                toastr.error('Hubo un problema al generar o descargar el archivo Excel.');
+            <?php } ?>
         });
     </script>
 </body>
