@@ -1,9 +1,9 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // Inicializar DataTable
     $('#usuariosTable').DataTable();
 
     // Habilitar/deshabilitar el selector de sector según el tipo de usuario seleccionado
-    $('input[name="tipoUsuario"]').change(function() {
+    $('input[name="tipoUsuario"]').change(function () {
         if ($('#usuarioAdmin').is(':checked')) {
             $('#sector').prop('disabled', true);
         } else {
@@ -12,7 +12,7 @@ $(document).ready(function() {
     });
 
     // Crear nuevo usuario
-    $('#crearUsuarioBtn').click(function(event) {
+    $('#crearUsuarioBtn').click(function (event) {
         event.preventDefault(); // Prevenir el envío del formulario
 
         var sectorId = $('#sector').val();
@@ -20,10 +20,11 @@ $(document).ready(function() {
         var isAdmin = (tipoUsuario === 'admin');
 
         // Generar contraseña aleatoria
-        var password = Math.random().toString(36).slice(-12);
+        var password = Math.random().toString(31).replace(/[^\w]/gi, '').slice(-12);
+
 
         // Obtener nombre de usuario aleatorio desde la API
-        $.get('https://usernameapiv1.vercel.app/api/random-usernames', function(data) {
+        $.get('https://usernameapiv1.vercel.app/api/random-usernames', function (data) {
 
             var username = data.usernames[0];
 
@@ -38,7 +39,7 @@ $(document).ready(function() {
                     username: username,
                     password: password,
                     sector: sector
-                }, function(response) {
+                }, function (response) {
                     console.log(response); // Agrega esto para depurar
                     if (response.success) {
                         // Actualizar el contenido del textarea con las credenciales
@@ -53,13 +54,13 @@ $(document).ready(function() {
             } else {
                 toastr.error('Error al obtener el nombre de usuario desde la API.');
             }
-        }).fail(function() {
+        }).fail(function () {
             toastr.error('Error al conectar con la API de generación de nombres de usuario.');
         });
     });
 
     // Copiar credenciales al portapapeles
-    $('#copiarCredenciales').click(function() {
+    $('#copiarCredenciales').click(function () {
         var textarea = document.getElementById('credencialesTextArea');
         textarea.select();
         document.execCommand('copy');
@@ -67,18 +68,18 @@ $(document).ready(function() {
     });
 
     // Recargar la página al cerrar el modal
-    $('#usuarioModal').on('hidden.bs.modal', function(e) {
+    $('#usuarioModal').on('hidden.bs.modal', function (e) {
         location.reload();
     });
 
     // Eliminar usuario si no ha iniciado la encuesta
-    $('.eliminar-usuario').click(function() {
+    $('.eliminar-usuario').click(function () {
         var userId = $(this).data('id');
 
         if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
             $.post('eliminar_usuario.php', {
                 user_id: userId
-            }, function(response) {
+            }, function (response) {
                 if (response.success) {
                     toastr.success('Usuario eliminado con éxito.');
                     location.reload();

@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//NO se ocupa ahora mismo
 // Verifica si la sesión está iniciada
 if (!isset($_SESSION['username']) || !isset($_SESSION['sector'])) {
     header("Location: broken.php");

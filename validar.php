@@ -4,7 +4,9 @@ include 'db.php';
 
 // Verificar que la conexión sea válida
 if (!$conn) {
-    die("Conexión fallida: " . $conn->connect_error);
+    $_SESSION['error'] = "Conexión fallida: " . $conn->connect_error;
+    header("Location: login.php");
+    exit();
 }
 
 // Función para limpiar la entrada de datos y evitar inyecciones XSS
@@ -72,7 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $stmt->close();
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        $_SESSION['error'] = "Error: " . $e->getMessage();
+        header("Location: login.php");
         exit();
     }
 }

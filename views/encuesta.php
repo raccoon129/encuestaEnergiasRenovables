@@ -1,7 +1,7 @@
 <?php
 include 'includes/session_check.php';
 // Permitir acceso solo a encuestados
-check_access(['Gubernamental', 'Académico', 'Empresa de energía renovable', 'Usuario de la tecnología','Otro']);
+//check_access(['Gubernamental', 'Académico', 'Empresa de energía renovable', 'Usuario de la tecnología','Otro']);
 ?>
 
 
