@@ -104,15 +104,15 @@ if ($result->num_rows > 0) {
                     </td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Acciones">
-                            <button class="btn btn-primary ver-progreso" data-id="<?php echo $usuario['id_usuario']; ?>">
+                            <button class="btn btn-primary btn-sm ver-progreso" data-id="<?php echo $usuario['id_usuario']; ?>">
                                 <i class="fas fa-eye"></i> Ver Progreso
                             </button>
                             <?php if ($usuario['estado_encuesta'] == 'Completado'): ?>
-                                <button class="btn btn-success descargar-excel" data-id="<?php echo $usuario['id_usuario']; ?>">
+                                <button class="btn btn-success btn-sm descargar-excel" data-id="<?php echo $usuario['id_usuario']; ?>">
                                     <i class="fas fa-download"></i> Descargar Excel
                                 </button>
                             <?php else: ?>
-                                <button class="btn btn-secondary" disabled>
+                                <button class="btn btn-secondary btn-sm" disabled>
                                     <i class="fas fa-download"></i> Descargar Excel
                                 </button>
                             <?php endif; ?>

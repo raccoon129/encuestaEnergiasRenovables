@@ -30,7 +30,7 @@ if ($result->num_rows > 0) {
 
 <body>
     <div class="container mt-2">
-        <h2>Gestión de Factores</h2>
+        <h2>Modificar Factores</h2>
         <div class="alert alert-warning" role="alert">
             Solo puede modificar el contenido de los factores disponibles previamente establecidos en esta solución.
         </div>

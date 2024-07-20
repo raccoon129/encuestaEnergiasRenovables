@@ -22,7 +22,7 @@ if ($result->num_rows > 0) {
 </head>
 <body>
     <div class="container mt-2">
-        <h2>Gestión de Categorías</h2>
+        <h2>Cambiar Categorías</h2>
         <div class="alert alert-warning" role="alert">
             Solo puede modificar el nombre de las categorías disponibles previamente establecidos en esta solución.
         </div>
@@ -40,7 +40,7 @@ if ($result->num_rows > 0) {
                     <td><?php echo $categoria['id_categoria']; ?></td>
                     <td><?php echo $categoria['nombre_categoria']; ?></td>
                     <td>
-                        <button class="btn btn-primary editar-categoria" data-id="<?php echo $categoria['id_categoria']; ?>" data-nombre="<?php echo $categoria['nombre_categoria']; ?>">Editar</button>
+                        <button class="btn btn-primary btn-sm editar-categoria" data-id="<?php echo $categoria['id_categoria']; ?>" data-nombre="<?php echo $categoria['nombre_categoria']; ?>">Editar</button>
                     </td>
                 </tr>
                 <?php endforeach; ?>

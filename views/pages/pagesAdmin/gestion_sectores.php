@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
 
 <body>
     <div class="container mt-2">
-        <h2>Gestión de Sectores</h2>
+        <h2>Actualizar Sectores</h2>
         <div class="alert alert-info" role="alert">
             Añada o elimine sectores a los cuales se tendrán como selección al momento de generar cuentas para encuestados.
         </div>
@@ -49,7 +49,7 @@ if ($result->num_rows > 0) {
                             <td><?php echo $sector['id_sector']; ?></td>
                             <td><?php echo $sector['nombre_sector']; ?></td>
                             <td>
-                                <button class="btn btn-warning btn-sm editar-sector" data-id="<?php echo $sector['id_sector']; ?>" data-nombre="<?php echo $sector['nombre_sector']; ?>">Editar</button>
+                                <button class="btn btn-info btn-sm editar-sector" data-id="<?php echo $sector['id_sector']; ?>" data-nombre="<?php echo $sector['nombre_sector']; ?>">Editar</button>
                                 <button class="btn btn-danger btn-sm eliminar-sector" data-id="<?php echo $sector['id_sector']; ?>">Eliminar</button>
                             </td>
                         </tr>
