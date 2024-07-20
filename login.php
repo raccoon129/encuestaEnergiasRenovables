@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.5.4/vegas.min.js"></script>
 </head>
+
 <body>
     <div id="background"></div>
     <div class="container">
@@ -36,6 +38,7 @@
                 <p>Bienvenido. Por favor, inicie sesión con su usuario y contraseña previamente proporcionado para continuar.</p>
                 <p>Si es un administrador, será redirigido al panel administrativo donde podrá visualizar los resultados de las encuestas.</p>
                 <p>Si es un encuestado, ingrese sus credenciales y será redirigido a la encuesta correspondiente.</p>
+                <button type="button" class="btn btn-outline-info" onclick="window.open('https://forms.gle/N6DbKfD4r5WbApBw5', '_blank')">Hacer un comentario</button>
             </div>
         </div>
     </div>
@@ -50,16 +53,27 @@
             ?>
 
             $("#background").vegas({
-                slides: [
-                    { src: "img/1.jpg" },
-                    { src: "img/2.jpg" },
-                    { src: "img/3.jpg" },
-                    { src: "img/4.jpg" },
-                    { src: "img/5.jpg" },
-                    { src: "img/6.jpg" }
+                slides: [{
+                        src: "img/1.jpg"
+                    },
+                    {
+                        src: "img/2.jpg"
+                    },
+                    {
+                        src: "img/3.jpg"
+                    },
+                    {
+                        src: "img/4.jpg"
+                    },
+                    {
+                        src: "img/5.jpg"
+                    },
+                    {
+                        src: "img/6.jpg"
+                    }
                 ],
-                transition: [ 'fade', 'zoomOut'],
-                animation: [ 'kenburnsUp', 'kenburnsDown', 'kenburnsLeft', 'kenburnsRight' ],
+                transition: ['fade', 'zoomOut'],
+                animation: ['kenburnsUp', 'kenburnsDown', 'kenburnsLeft', 'kenburnsRight'],
                 transitionDuration: 2000,
                 delay: 7000,
                 animationDuration: 20000,
@@ -68,4 +82,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -1,14 +1,17 @@
 <?php
-//session_start();
+// session_start();
 if (!isset($_SESSION['username'])) {
     header("Location: ../login.php");
     exit();
 }
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Encuesta para evaluar las barreras de la adopción de energía renovable en México</a>
-    <div class="collapse navbar-collapse">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm bg-white rounded">
+    <a class="navbar-brand" href="#" style="white-space: normal;">Encuesta para evaluar las barreras de la adopción de energía renovable en México</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <span class="nav-link">Usuario: <?php echo $_SESSION['username']; ?></span>
@@ -19,3 +22,10 @@ if (!isset($_SESSION['username'])) {
         </ul>
     </div>
 </nav>
+
+<style>
+    .navbar-brand {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+</style>

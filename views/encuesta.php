@@ -7,6 +7,7 @@ include 'includes/session_check.php';
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,19 +19,21 @@ include 'includes/session_check.php';
 
     </style>
 </head>
+
 <body class="d-flex flex-column h-100" scrolling="no"> <!-- evita que haya una barra de desplazamiento en la página principal -->
 
-<?php include 'includes/header.php'; ?>
+    <?php include 'includes/header.php'; ?>
 
-<div class="container-fluid encuesta-container d-flex flex-column h-100">
-    <div class="row flex-grow-1">
-        <div class="col">
-            <iframe src="pages/introduccion.php" frameborder="0" marginheight="0" marginwidth="0" scrolling="yes"></iframe>
+    <div class="container-fluid encuesta-container d-flex flex-column h-100">
+        <div class="row flex-grow-1">
+            <div class="col">
+                <iframe src="pages/introduccion.php" frameborder="0" marginheight="0" marginwidth="0" scrolling="yes"></iframe>
+            </div>
         </div>
     </div>
-</div>
 
-<?php include 'includes/footer.php'; ?>
+    <?php include 'includes/footer.php'; ?>
 
 </body>
+
 </html>
