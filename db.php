@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "encuestaEnergiasRenovables";
+$servername = "db4free.net";
+$username = "pruebas4416";
+$password = "sistemas";
+$dbname = "pruebas4416";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
