@@ -32,7 +32,7 @@ if ($result->num_rows > 0) {
     <div class="container mt-2">
         <h2>Gestión de Factores</h2>
         <div class="alert alert-warning" role="alert">
-            Solo puede modificar los factores disponibles previamente establecidos en esta solución.
+            Solo puede modificar el contenido de los factores disponibles previamente establecidos en esta solución.
         </div>
         <table class="table table-striped">
             <thead>
@@ -89,46 +89,7 @@ if ($result->num_rows > 0) {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.editar-factor').on('click', function() {
-                var id = $(this).data('id');
-                var nombre = $(this).data('nombre');
-                var contenido = $(this).data('contenido');
-
-                $('#editar_id_factor').val(id);
-                $('#editar_nombre_factor').val(nombre);
-                $('#editar_contenido_factor').val(contenido);
-
-                $('#editarFactorModal').modal('show');
-            });
-
-            $('#editarFactorForm').on('submit', function(e) {
-                e.preventDefault();
-
-                $.ajax({
-                    url: 'gestion_factores_sectores_categorias.php',
-                    type: 'POST',
-                    data: $(this).serialize() + '&action=update_factor',
-                    success: function(response) {
-                        var result = JSON.parse(response);
-                        if (result.success) {
-                            toastr.success('Factor actualizado correctamente');
-                            $('#editarFactorModal').modal('hide');
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1500); // Espera 1.5 segundos antes de recargar la página
-                        } else {
-                            toastr.error(result.message || 'Error al actualizar el factor');
-                        }
-                    },
-                    error: function() {
-                        toastr.error('Error en la comunicación con el servidor');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="../../../js/Script_gestion_factores.js"></script>
 </body>
 
 </html>

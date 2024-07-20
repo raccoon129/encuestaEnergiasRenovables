@@ -1,6 +1,6 @@
 <?php
 include '../../../db.php';
-
+//ARCHIVO DE FUNCIONALIDADES
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 echo json_encode(['success' => true]);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Error al actualizar el factor.']);
+                echo json_encode(['success' => false, 'message' => $stmt->error]);
             }
             $stmt->close();
             break;
@@ -33,7 +33,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 echo json_encode(['success' => true]);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Error al actualizar el sector.']);
+                echo json_encode(['success' => false, 'message' => $stmt->error]);
+            }
+            $stmt->close();
+            break;
+
+        case 'add_sector':
+            $nombre_sector = $_POST['nombre_sector'];
+
+            $sql = "INSERT INTO Sector (nombre_sector) VALUES (?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('s', $nombre_sector);
+
+            if ($stmt->execute()) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => $stmt->error]);
+            }
+            $stmt->close();
+            break;
+
+        case 'delete_sector':
+            $id_sector = $_POST['id_sector'];
+
+            // Verificar si el sector está asignado a algún usuario
+            $sql = "SELECT COUNT(*) as count FROM Usuario WHERE id_sector = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $id_sector);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+
+            if ($row['count'] == 0) {
+                // Eliminar el sector si no está asignado a ningún usuario
+                $sql = "DELETE FROM Sector WHERE id_sector = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('i', $id_sector);
+
+                if ($stmt->execute()) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => $stmt->error]);
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'No se puede eliminar el sector porque está asignado a uno o más usuarios.']);
             }
             $stmt->close();
             break;
@@ -49,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 echo json_encode(['success' => true]);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Error al actualizar la categoría.']);
+                echo json_encode(['success' => false, 'message' => $stmt->error]);
             }
             $stmt->close();
             break;
