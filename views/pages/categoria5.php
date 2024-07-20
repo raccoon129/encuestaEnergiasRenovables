@@ -6,6 +6,19 @@ if (!isset($_SESSION['username'])) {
 }
 include '../../db.php';
 
+// Declarar la variable de la categoría
+$id_categoria = 5;
+
+// Obtener el nombre de la categoría desde la base de datos
+$sql_categoria = "SELECT nombre_categoria FROM Categoría WHERE id_categoria = $id_categoria";
+$result_categoria = $conn->query($sql_categoria);
+$nombre_categoria = "Nombre no encontrado";
+
+if ($result_categoria && $result_categoria->num_rows > 0) {
+    $row_categoria = $result_categoria->fetch_assoc();
+    $nombre_categoria = $row_categoria['nombre_categoria'];
+}
+
 // Obtener los factores desde la base de datos
 $sql = "SELECT id_factor, nombre_factor, contenido_factor FROM Factor WHERE id_factor BETWEEN 1 AND 18";
 $result = $conn->query($sql);
@@ -58,7 +71,7 @@ $pares_contestados = count($respuestas);
 
 <body>
     <div class="container mt-5">
-        <h2>Categoría 5 - Costo de prod E</h2>
+        <h2>Categoría <?php echo $id_categoria; ?> - <?php echo $nombre_categoria; ?></h2>
         <br>
         <div class="alert alert-primary" role="alert">
             ¿Qué factor representa una barrera para la implementación de energía renovable en México? <br>
@@ -163,8 +176,8 @@ $pares_contestados = count($respuestas);
             validateSaveButton(pairIndex);
         }
 
-                // Función para verificar si todos los pares han sido contestados
-                function verificarRespuestas() {
+        // Función para verificar si todos los pares han sido contestados
+        function verificarRespuestas() {
             var pares = <?php echo json_encode($pares); ?>;
             var respuestas = <?php echo json_encode($respuestas); ?>;
             var totalPares = pares.length;
