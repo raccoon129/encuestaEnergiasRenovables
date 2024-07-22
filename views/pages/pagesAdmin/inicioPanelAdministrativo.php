@@ -39,6 +39,15 @@ check_access(['admon']);
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Responder Encuesta</h5>
+                            <p class="card-text">Responda la encuesta como administrador si es requerido.</p>
+                            <a onclick="window.open('../../encuesta.php', '_blank')" class="btn btn-success">Ir a la Encuesta</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <br>
             <h5>Gestionar detalles:</h5>
