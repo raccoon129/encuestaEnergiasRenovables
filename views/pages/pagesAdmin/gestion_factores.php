@@ -73,7 +73,7 @@ if ($result->num_rows > 0) {
                         <input type="hidden" id="editar_id_factor" name="id_factor">
                         <div class="form-group">
                             <label for="editar_nombre_factor">Nombre del Factor</label>
-                            <input type="text" class="form-control" id="editar_nombre_factor" name="nombre_factor" disabled>
+                            <input type="text" class="form-control" id="editar_nombre_factor" name="nombre_factor" readonly>
                         </div>
                         <div class="form-group">
                             <label for="editar_contenido_factor">Contenido</label>
