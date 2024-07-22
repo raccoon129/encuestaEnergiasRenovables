@@ -24,7 +24,7 @@ if (!isset($_SESSION['username'])) {
             Por favor, asegúrese de terminarla en su totalidad.
         </div>
         <div class="alert alert-info" role="alert">
-            A continuación se presentan 17 factores, los cuales deberá relacionar con base en su expriencia y respondiendo a la siguiente premisa:
+            A continuación se presentan 17 factores, los cuales deberá relacionar con base en su experiencia y respondiendo a la siguiente premisa:
             <br>
             <strong>¿Qué factor representa una barrera para la implementación de energía renovable en México?</strong>
             <br>
@@ -45,14 +45,16 @@ if (!isset($_SESSION['username'])) {
                     colocándolo en el valor (de 0 a 100) en cuanto a la medida de la incidencia, en este ejemplo <strong>20%</strong>
                 
             </div>
-            <img src="../../img/Factoress.gif" class="img-fluid shadow-lg rounded" alt="Imagen de ejemplo sobre como responder cada plantemiento">
+            <img src="../../img/Factoress.png" class="img-fluid shadow-lg rounded" alt="Imagen de ejemplo sobre como responder cada plantemiento">
 
         </div>
         <div class="alert alert-warning" role="alert">
             Para una mejor experiencia, la encuesta está optimizada para ser respondida desde un entorno de escritorio (PC) o tablet en modo horizontal.
         </div>
         <a href="categoria1.php" class="btn btn-success">Comenzar Encuesta</a>
+        <br>
     </div>
+    <br>
 </body>
 
 </html>
