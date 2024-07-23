@@ -32,21 +32,33 @@
     <script>
         $(document).ready(function() {
             $("#background").vegas({
-                slides: [
-                    { src: "img/1.jpg" },
-                    { src: "img/2.jpg" },
-                    { src: "img/3.jpg" },
-                    { src: "img/4.jpg" },
-                    { src: "img/5.jpg" },
-                    { src: "img/6.jpg" }
+                slides: [{
+                        src: "img/1.jpg"
+                    },
+                    {
+                        src: "img/2.jpg"
+                    },
+                    {
+                        src: "img/3.jpg"
+                    },
+                    {
+                        src: "img/4.jpg"
+                    },
+                    {
+                        src: "img/5.jpg"
+                    },
+                    {
+                        src: "img/6.jpg"
+                    }
                 ],
-                transition: [ 'fade', 'zoomOut', 'blurLeft' ],
-                animation: [ 'kenburnsUp', 'kenburnsDown', 'kenburnsLeft', 'kenburnsRight' ],
+                transition: ['fade', 'zoomOut'],
+                animation: ['kenburnsUp', 'kenburnsDown', 'kenburnsLeft', 'kenburnsRight'],
                 transitionDuration: 2000,
                 delay: 7000,
                 animationDuration: 20000,
                 overlay: 'https://cdnjs.cloudflare.com/ajax/libs/vegas/2.5.4/overlays/08.png'
             });
+        
         });
     </script>
 </body>

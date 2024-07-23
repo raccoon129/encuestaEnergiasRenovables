@@ -55,7 +55,7 @@ if ($result->num_rows > 0) {
     <div class="container mt-2">
         <div class="row">
             <div class="col-md-8">
-                <h2>Usuarios</h2>
+                <h2>Gestión de Usuarios</h2>
                 <table id="usuariosTable" class="table table-striped">
                     <thead>
                         <tr>
