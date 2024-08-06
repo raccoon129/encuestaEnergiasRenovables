@@ -31,7 +31,7 @@ if ($result_check_users) {
         $sql_check_sector = "SELECT id_sector FROM Sector WHERE nombre_sector = 'admon'";
         $result_check_sector = $conn->query($sql_check_sector);
         if ($result_check_sector->num_rows == 0) {
-            $sql_insert_sector = "INSERT INTO sector (nombre_sector) VALUES ('admon')";
+            $sql_insert_sector = "INSERT INTO Sector (nombre_sector) VALUES ('admon')";
             $conn->query($sql_insert_sector);
             $id_sector = $conn->insert_id;
         } else {
@@ -78,18 +78,50 @@ if (isset($_SESSION['username']) && isset($_SESSION['sector']) && isset($_SESSIO
     }
 } else {
     // Si no hay sesión iniciada
-    if ($usuarioCreado) {
-        echo "<h2>Usuario Master creado exitosamente</h2>";
-        echo "<p>Usuario: $usuario</p>";
-        echo "<p>Contraseña: $contraseñaAleatoria</p>";
-        echo '<button onclick="location.href=\'login.php\'">Continuar</button>';
-    } elseif ($usuarioCreado === false && isset($mensajeError)) {
-        echo "<h2>Error</h2>";
-        echo "<p>$mensajeError</p>";
-    } else {
-        // Si no hay sesión iniciada y no es la primera vez, redirigir al login
-        header("Location: login.php");
-        exit();
-    }
+    ?>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Instalación de Encuesta</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1 class="text-center">Instalación de Encuesta para Evaluar las Barreras de la Adopción de Energía Renovable en México</h1>
+            <div class="mt-4">
+                <?php
+                if ($usuarioCreado) {
+                    echo '<div class="alert alert-success" role="alert">';
+                    echo '<h2 class="alert-heading">Usuario Master creado exitosamente</h2>';
+                    echo '<p>Usuario: ' . $usuario . '</p>';
+                    echo '<p>Contraseña: ' . $contraseñaAleatoria . '</p>';
+                    echo '<hr>';
+                    echo '<button class="btn btn-primary" onclick="location.href=\'login.php\'">Continuar</button>';
+                    echo '</div>';
+                } elseif ($usuarioCreado === false && isset($mensajeError)) {
+                    echo '<div class="alert alert-danger" role="alert">';
+                    echo '<h2 class="alert-heading">Error</h2>';
+                    echo '<p>' . $mensajeError . '</p>';
+                    echo '</div>';
+                } elseif (isset($_GET['desarrollo']) && $_GET['desarrollo'] == 'true') {
+                    // Modo de desarrollo: mostrar contenido incluso si ya existen cuentas
+                    echo '<div class="alert alert-info" role="alert">';
+                    echo '<h2 class="alert-heading">Modo de Desarrollo Activado</h2>';
+                    echo '<p>Este es el aspecto de la página de instalación cuando no hay cuentas de usuario creadas.</p>';
+                    echo '<button class="btn btn-primary" onclick="location.href=\'login.php\'">Continuar</button>';
+                    echo '</div>';
+                } else {
+                    // Si no hay sesión iniciada y no es la primera vez, redirigir al login
+                    header("Location: login.php");
+                    exit();
+                }
+                ?>
+            </div>
+        </div>
+    </body>
+    </html>
+    <?php
 }
 ?>
