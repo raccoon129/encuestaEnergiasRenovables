@@ -35,7 +35,7 @@ if (!isset($_SESSION['username'])) {
                 <li> Solo puede seleccionar uno de cada par, el contrario permanecerá en ceros automáticamente.
                     Mueva el control deslizante hasta establecer un porcentaje, el cual va de 0 a 100, para cada uno de los factores presentados.
                 </li>
-                <li>Una vez hecha su elección, de clic en <strong>Guardar</strong> y posteriormente clic al nuevo plantemiento que desee contestar, marcados en color azul. <br> <strong>¡No podrá modificar su respuesta una vez guardada!</strong></li>
+                <li>Una vez hecha su elección, de <strong>un único clic</strong> en <strong>Guardar</strong> y posteriormente clic al nuevo plantemiento que desee contestar, marcados en color azul. <br> <strong>¡No podrá modificar su respuesta una vez guardada!</strong></li>
             </div>
             <div class="alert alert-success" role="alert">
                 <h5>Ejemplo:</h5>

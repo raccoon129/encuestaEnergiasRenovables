@@ -14,6 +14,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.5.4/vegas.min.js"></script>
+    <style>
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background-color: white;
+            text-align: center;
+        }
+        .footer img {
+            height: 60px;
+            width: auto;
+            box-shadow: none;
+        }
+        
+    </style>
 </head>
 
 <body>
@@ -42,6 +59,9 @@
                 <button type="button" class="btn btn-outline-info" onclick="window.open('https://forms.gle/N6DbKfD4r5WbApBw5', '_blank')">Hacer un comentario</button>
             </div>
         </div>
+    </div>
+    <div class="footer">
+        <img src="img/ISC x IER.gif" alt="ISC x IER">
     </div>
     <script>
         $(document).ready(function() {

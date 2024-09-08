@@ -175,8 +175,8 @@ $pares_contestados = count($respuestas);
             validateSaveButton(pairIndex);
         }
 
-                // Función para verificar si todos los pares han sido contestados
-                function verificarRespuestas() {
+        // Función para verificar si todos los pares han sido contestados
+        function verificarRespuestas() {
             var pares = <?php echo json_encode($pares); ?>;
             var respuestas = <?php echo json_encode($respuestas); ?>;
             var totalPares = pares.length;
@@ -187,7 +187,7 @@ $pares_contestados = count($respuestas);
             document.querySelector('.progress-bar').style.width = progressPercentage + '%';
 
             if (paresContestados === totalPares) {
-                //document.getElementById('continueBtn').style.display = 'block';
+                document.getElementById('continueBtn').style.display = 'block';
             } else {
                 document.getElementById('continueBtn').style.display = 'none';
             }
@@ -235,6 +235,11 @@ $pares_contestados = count($respuestas);
             $('.save-form').on('submit', function(event) {
                 event.preventDefault();
                 var $form = $(this);
+                var $saveButton = $form.find('button[type=submit]');
+
+                // Deshabilitar el botón inmediatamente después de hacer clic
+                $saveButton.prop('disabled', true);
+
                 $.ajax({
                     type: $form.attr('method'),
                     url: $form.attr('action'),
@@ -246,7 +251,7 @@ $pares_contestados = count($respuestas);
 
                             // Deshabilitar los elementos del formulario
                             $form.find('input[type=range]').addClass('disabled-range').prop('disabled', true);
-                            $form.find('button[type=submit]').text('Respondido').addClass('btn-respondido').prop('disabled', true);
+                            $saveButton.text('Respondido').addClass('btn-respondido');
                             $form.closest('.card').addClass('completed');
 
                             // Contraer el acordeón actual y abrir el siguiente
@@ -258,7 +263,6 @@ $pares_contestados = count($respuestas);
                                 $nextCard.collapse('show');
                             } else {
                                 // Mostrar el botón de continuar si no hay más pares
-
 
                             }
 
