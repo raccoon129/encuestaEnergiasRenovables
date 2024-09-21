@@ -56,7 +56,10 @@
                 <p>Bienvenido. Por favor, inicie sesión con su usuario y contraseña previamente proporcionado para continuar.</p>
                 <p>Si es un administrador, será redirigido al panel administrativo donde podrá visualizar los resultados de las encuestas.</p>
                 <p>Si es un encuestado, ingrese sus credenciales y será redirigido a la encuesta correspondiente.</p>
+                <h6>Versión 1.0.3</h6>
                 <button type="button" class="btn btn-outline-info" onclick="window.open('https://forms.gle/N6DbKfD4r5WbApBw5', '_blank')">Hacer un comentario</button>
+                <button type="button" class="btn btn-outline-primary" onclick="window.open('views/agradecimientos.html', 'Credits', 'width=800,height=1000')">Créditos</button>
+
             </div>
         </div>
     </div>
